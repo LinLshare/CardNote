@@ -11,4 +11,8 @@ public class StringUtils {
   public static String getString(Context context, @StringRes int stringRes) {
     return context.getResources().getString(stringRes);
   }
+
+  public static String getString(Context context, @StringRes int stringRes, Object... formatArgs) {
+    return context.getResources().getString(stringRes, formatArgs);
+  }
 }

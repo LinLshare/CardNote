@@ -58,7 +58,6 @@ public class HomePageView extends PageView {
       addNoteButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Toast.makeText(context, "add note", Toast.LENGTH_SHORT).show();
           postEvent(EventCallback.EVENT_ADD_NOTE_CLICK);
         }
       });
