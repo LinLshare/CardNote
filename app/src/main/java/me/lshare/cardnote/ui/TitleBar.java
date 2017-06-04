@@ -14,6 +14,7 @@ import android.widget.TextView;
 import me.lshare.cardnote.R;
 import me.lshare.common.ui.ColorUtils;
 import me.lshare.common.ui.DimensionUtils;
+import me.lshare.common.ui.StringUtils;
 
 /**
  * One and only one TitleBar in APP with several states.
@@ -43,8 +44,7 @@ public class TitleBar extends FrameLayout {
 
   private void init() {
     setBackgroundColor(ColorUtils.getColor(context, R.color.colorPrimary));
-    String title = context.getResources().getString(R.string.app_name);
-    showCenterTitle(title);
+    showCenterTitle(StringUtils.getString(context, R.string.app_name));
   }
 
   public void home(String title) {
