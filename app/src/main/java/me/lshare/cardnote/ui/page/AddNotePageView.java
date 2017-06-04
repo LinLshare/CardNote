@@ -1,4 +1,4 @@
-package me.lshare.cardnote.ui;
+package me.lshare.cardnote.ui.page;
 
 import android.content.Context;
 

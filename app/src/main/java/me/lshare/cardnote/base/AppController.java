@@ -31,6 +31,14 @@ public class AppController implements EventCallback {
       case EVENT_ADD_NOTE_CLICK:
         mainActivity.showAddNote();
         break;
+      case EVENT_EDIT_DONE:
+
+        break;
+      case EVENT_SHARE:
+        break;
+      case EVENT_SHOW_HOME:
+        
+        break;
       default:
         break;
     }

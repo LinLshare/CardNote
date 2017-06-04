@@ -1,11 +1,9 @@
 package me.lshare.cardnote.base;
 
 import android.support.v7.app.AppCompatActivity;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
-import me.lshare.cardnote.ui.AddNotePageView;
-import me.lshare.cardnote.ui.HomePageView;
+import me.lshare.cardnote.ui.page.AddNotePageView;
+import me.lshare.cardnote.ui.page.HomePageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void showAddNote() {
+    uiManager.upperLayer().titleBarPageView().edit("输入标题", true);
     addPageToNativeLayer(new AddNotePageView(this));
   }
 

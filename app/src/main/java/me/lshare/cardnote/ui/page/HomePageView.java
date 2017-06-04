@@ -1,4 +1,4 @@
-package me.lshare.cardnote.ui;
+package me.lshare.cardnote.ui.page;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import me.lshare.cardnote.R;
 import me.lshare.cardnote.adapter.HomeRecyclerAdapter;
 import me.lshare.cardnote.base.EventCallback;
 import me.lshare.cardnote.base.PageView;
@@ -53,6 +54,7 @@ public class HomePageView extends PageView {
     {
       FloatingActionButton addNoteButton = new FloatingActionButton(context);
       addNoteButton.setSize(FloatingActionButton.SIZE_NORMAL);
+      addNoteButton.setImageResource(R.drawable.ic_add_white_24dp);
       addNoteButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

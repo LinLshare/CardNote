@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.lshare.cardnote.R;
+import me.lshare.common.ui.ColorUtils;
 import me.lshare.common.ui.DimensionUtils;
 
 /**
@@ -32,6 +34,7 @@ public class TitleBar extends FrameLayout {
   private ImageView rightDoneImageView;
   private EditText titleEditView;
 
+
   public TitleBar(@NonNull Context context) {
     super(context);
     this.context = context;
@@ -39,6 +42,7 @@ public class TitleBar extends FrameLayout {
   }
 
   private void init() {
+    setBackgroundColor(ColorUtils.getColor(context, R.color.colorPrimary));
     String title = context.getResources().getString(R.string.app_name);
     showCenterTitle(title);
   }
@@ -56,24 +60,46 @@ public class TitleBar extends FrameLayout {
 
   private void showHome(String title) {
     showCenterTitle(title);
+
+    if (backImageView != null) {
+      backImageView.setVisibility(GONE);
+    }
+    if (titleEditView != null) {
+      titleEditView.setVisibility(GONE);
+    }
+    if (rightDoneImageView != null) {
+      rightDoneImageView.setVisibility(GONE);
+    }
+    if (rightShareImageView != null) {
+      rightShareImageView.setVisibility(GONE);
+    }
+
     setCurrentState(STATE_HOME);
   }
 
-  public void edit(String title) {
+  public void edit(String title, boolean isHint) {
     switch (currentState) {
       case STATE_HOME:
       case STATE_VIEW:
-        showEdit(title);
+        showEdit(title, isHint);
         break;
       case STATE_EDIT:
         break;
     }
   }
 
-  private void showEdit(String title) {
+  private void showEdit(String title, boolean isHint) {
     showBackImageView();
-    showCenterEditTitle(title);
+    showCenterEditTitle(title, isHint);
     showRightDoneImageView();
+
+    if (titleTextView != null) {
+      titleTextView.setVisibility(GONE);
+    }
+    if (rightShareImageView != null) {
+      rightShareImageView.setVisibility(GONE);
+    }
+
     setCurrentState(STATE_EDIT);
   }
 
@@ -92,6 +118,14 @@ public class TitleBar extends FrameLayout {
     showBackImageView();
     showCenterTitle(title);
     showRightShareImageView();
+
+    if (titleEditView != null) {
+      titleEditView.setVisibility(GONE);
+    }
+    if (rightDoneImageView != null) {
+      rightDoneImageView.setVisibility(GONE);
+    }
+
     setCurrentState(STATE_VIEW);
   }
 
@@ -105,13 +139,16 @@ public class TitleBar extends FrameLayout {
     }
     backImageView = new ImageView(context);
     backImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-    backImageView.setImageResource(R.drawable.ic_arrow_back_black_24dp);
+    backImageView.setImageResource(R.drawable.ic_arrow_white_black_24dp);
     int widthAndHeight = DimensionUtils.dp2px(context, 48);
     LayoutParams backImageViewLp = new LayoutParams(widthAndHeight, widthAndHeight);
     backImageViewLp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-    int margin = DimensionUtils.dp2px(context, 16);
-    backImageViewLp.leftMargin = margin;
     addView(backImageView, backImageViewLp);
+
+    if (listener == null) {
+      throw new IllegalStateException("!!! should set listener first");
+    }
+    listener.onLeftBackImageClick();
   }
 
   private void showCenterTitle(String title) {
@@ -121,6 +158,7 @@ public class TitleBar extends FrameLayout {
     }
     titleTextView = new TextView(context);
     titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+    titleTextView.setTextColor(ColorUtils.getColor(context, R.color.textColorWhite));
     titleTextView.setText(title);
     LayoutParams titleTextViewLp =
         new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -128,14 +166,21 @@ public class TitleBar extends FrameLayout {
     addView(titleTextView, titleTextViewLp);
   }
 
-  private void showCenterEditTitle(String title) {
+  private void showCenterEditTitle(String title, boolean isHint) {
     if (titleEditView != null) {
       titleEditView.setText(title);
       return;
     }
     titleEditView = new EditText(context);
     titleEditView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-    titleEditView.setText(title);
+    titleEditView.setGravity(Gravity.CENTER);
+    titleEditView.setTextColor(ColorUtils.getColor(context, R.color.textColorWhite));
+    titleEditView.setWidth(DimensionUtils.dp2px(context, 160));
+    if (isHint) {
+      titleEditView.setHint(title);
+    } else {
+      titleEditView.setText(title);
+    }
     LayoutParams titleTextViewLp =
         new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     titleTextViewLp.gravity = Gravity.CENTER;
@@ -153,6 +198,16 @@ public class TitleBar extends FrameLayout {
     int margin = DimensionUtils.dp2px(context, 16);
     rightShareImageViewLp.rightMargin = margin;
     addView(rightShareImageView, rightShareImageViewLp);
+
+    rightShareImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener == null) {
+          throw new IllegalStateException("!!! should set listener first");
+        }
+        listener.onRightShareImageViewClick();
+      }
+    });
   }
 
   private void showRightDoneImageView() {
@@ -160,11 +215,35 @@ public class TitleBar extends FrameLayout {
       return;
     }
     rightDoneImageView = new ImageView(context);
+    rightDoneImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+    rightDoneImageView.setImageResource(R.drawable.ic_check_white_24dp);
     int widthAndHeight = DimensionUtils.dp2px(context, 48);
     LayoutParams rightDoneImageViewLp = new LayoutParams(widthAndHeight, widthAndHeight);
     rightDoneImageViewLp.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
-    int margin = DimensionUtils.dp2px(context, 16);
-    rightDoneImageViewLp.rightMargin = margin;
     addView(rightDoneImageView, rightDoneImageViewLp);
+
+    rightDoneImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener == null) {
+          throw new IllegalStateException("!!! should set listener first");
+        }
+        listener.onRightDoneImageViewClick();
+      }
+    });
+  }
+
+  private Listener listener;
+
+  public void setListener(Listener listener) {
+    this.listener = listener;
+  }
+
+  public interface Listener {
+    void onRightDoneImageViewClick();
+
+    void onRightShareImageViewClick();
+
+    void onLeftBackImageClick();
   }
 }

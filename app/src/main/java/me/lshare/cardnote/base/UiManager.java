@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import me.lshare.cardnote.ui.TitleBarPageView;
+import me.lshare.cardnote.ui.layer.NativeLayer;
+import me.lshare.cardnote.ui.layer.UpperLayer;
+import me.lshare.cardnote.ui.layer.WebLayer;
 import me.lshare.common.ui.DimensionUtils;
 
 /**
@@ -13,9 +15,9 @@ import me.lshare.common.ui.DimensionUtils;
  */
 public class UiManager {
 
-  private UiLayer nativeLayer;
-  private UiLayer webLayer;
-  private UiLayer upperLayer; // for TitleBar and Dialog
+  private NativeLayer nativeLayer;
+  private WebLayer webLayer;
+  private UpperLayer upperLayer;
   private FrameLayout contentView;
   private Context context;
   private EventCallback eventCallback;
@@ -26,15 +28,15 @@ public class UiManager {
     initLayers();
   }
 
-  public UiLayer nativeLayer() {
+  public NativeLayer nativeLayer() {
     return nativeLayer;
   }
 
-  public UiLayer webLayer() {
+  public WebLayer webLayer() {
     return webLayer;
   }
 
-  public UiLayer notificationLayer() {
+  public UpperLayer upperLayer() {
     return upperLayer;
   }
 
@@ -43,29 +45,27 @@ public class UiManager {
     contentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                              ViewGroup.LayoutParams.MATCH_PARENT));
 
-    int topMarginForTitleBar = DimensionUtils.dp2px(context, 56);
+    int topMarginForTitleBar = DimensionUtils.dp2px(context, 52);
 
-    nativeLayer = new UiLayer(context, eventCallback);
+    nativeLayer = new NativeLayer(context, eventCallback);
     FrameLayout.LayoutParams nativeLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
     nativeLayerLp.topMargin = topMarginForTitleBar;
     contentView.addView(nativeLayer.layerView(), nativeLayerLp);
-  
-    webLayer = new UiLayer(context, eventCallback);
+
+    webLayer = new WebLayer(context, eventCallback);
     FrameLayout.LayoutParams webLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
     webLayerLp.topMargin = topMarginForTitleBar;
     contentView.addView(webLayer.layerView(), webLayerLp);
 
-    upperLayer = new UiLayer(context, eventCallback);
-    FrameLayout.LayoutParams notificationLayerLp =
+    upperLayer = new UpperLayer(context, eventCallback);
+    FrameLayout.LayoutParams upperLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
-    contentView.addView(upperLayer.layerView(), notificationLayerLp);
-
-    upperLayer.addPage(new TitleBarPageView(context));
+    contentView.addView(upperLayer.layerView(), upperLayerLp);
   }
 
   public ViewGroup getContentView() {
