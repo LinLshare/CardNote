@@ -22,6 +22,7 @@ public class AddNotePageView extends PageView {
     rootView = new FrameLayout(context);
     rootView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                           ViewGroup.LayoutParams.MATCH_PARENT));
+    //title bar with title and buttons for done and cancel.
     {
 
     }

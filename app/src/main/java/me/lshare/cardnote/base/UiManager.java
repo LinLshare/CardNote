@@ -12,7 +12,7 @@ public class UiManager {
 
   private UiLayer nativeLayer;
   private UiLayer webLayer;
-  private UiLayer notificationLayer;
+  private UiLayer upperLayer; // for TitleBar and Dialog
   private FrameLayout contentView;
   private Context context;
   private EventCallback eventCallback;
@@ -32,7 +32,7 @@ public class UiManager {
   }
 
   public UiLayer notificationLayer() {
-    return notificationLayer;
+    return upperLayer;
   }
 
   private void initLayers() {
@@ -52,11 +52,11 @@ public class UiManager {
                                      ViewGroup.LayoutParams.MATCH_PARENT);
     contentView.addView(webLayer.layerView(), webLayerLp);
 
-    notificationLayer = new UiLayer(context, eventCallback);
+    upperLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams notificationLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
-    contentView.addView(notificationLayer.layerView(), notificationLayerLp);
+    contentView.addView(upperLayer.layerView(), notificationLayerLp);
   }
 
   public ViewGroup getContentView() {
