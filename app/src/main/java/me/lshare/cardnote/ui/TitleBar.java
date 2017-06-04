@@ -2,6 +2,7 @@ package me.lshare.cardnote.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -119,9 +120,10 @@ public class TitleBar extends FrameLayout {
       return;
     }
     titleTextView = new TextView(context);
+    titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
     titleTextView.setText(title);
-    int height = DimensionUtils.dp2px(context, 48);
-    LayoutParams titleTextViewLp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
+    LayoutParams titleTextViewLp =
+        new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     titleTextViewLp.gravity = Gravity.CENTER;
     addView(titleTextView, titleTextViewLp);
   }
@@ -132,9 +134,10 @@ public class TitleBar extends FrameLayout {
       return;
     }
     titleEditView = new EditText(context);
+    titleEditView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
     titleEditView.setText(title);
-    int height = DimensionUtils.dp2px(context, 48);
-    LayoutParams titleTextViewLp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
+    LayoutParams titleTextViewLp =
+        new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     titleTextViewLp.gravity = Gravity.CENTER;
     addView(titleEditView, titleTextViewLp);
   }

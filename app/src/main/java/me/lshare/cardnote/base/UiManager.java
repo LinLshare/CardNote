@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import me.lshare.cardnote.ui.TitleBarPageView;
+import me.lshare.common.ui.DimensionUtils;
+
 /**
  * @author Lshare
  * @date 2017/6/3
@@ -40,16 +43,20 @@ public class UiManager {
     contentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                              ViewGroup.LayoutParams.MATCH_PARENT));
 
+    int topMarginForTitleBar = DimensionUtils.dp2px(context, 56);
+
     nativeLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams nativeLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
+    nativeLayerLp.topMargin = topMarginForTitleBar;
     contentView.addView(nativeLayer.layerView(), nativeLayerLp);
-
+  
     webLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams webLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
+    webLayerLp.topMargin = topMarginForTitleBar;
     contentView.addView(webLayer.layerView(), webLayerLp);
 
     upperLayer = new UiLayer(context, eventCallback);
@@ -57,6 +64,8 @@ public class UiManager {
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
     contentView.addView(upperLayer.layerView(), notificationLayerLp);
+
+    upperLayer.addPage(new TitleBarPageView(context));
   }
 
   public ViewGroup getContentView() {

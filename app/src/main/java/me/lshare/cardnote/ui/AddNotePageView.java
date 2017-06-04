@@ -1,17 +1,14 @@
 package me.lshare.cardnote.ui;
 
 import android.content.Context;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import me.lshare.cardnote.base.PageView;
+import me.lshare.cardnote.base.CommonPageView;
 
 /**
  * @author Lshare
  * @date 2017/6/4
  */
-public class AddNotePageView extends PageView {
-  private FrameLayout rootView;
+public class AddNotePageView extends CommonPageView {
 
   public AddNotePageView(Context context) {
     super(context);
@@ -19,18 +16,7 @@ public class AddNotePageView extends PageView {
 
   @Override
   protected void initView() {
-    rootView = new FrameLayout(context);
-    rootView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                                          ViewGroup.LayoutParams.MATCH_PARENT));
-    //title bar with title and buttons for done and cancel.
-    {
+    super.initView();
 
-    }
-
-  }
-
-  @Override
-  public ViewGroup view() {
-    return rootView;
   }
 }

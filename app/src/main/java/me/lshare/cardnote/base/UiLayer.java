@@ -1,6 +1,7 @@
 package me.lshare.cardnote.base;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.FrameLayout;
 
 /**
@@ -31,5 +32,10 @@ public class UiLayer {
   public void addPage(PageView pageView) {
     layerView.addView(pageView.view());
     pageView.setEventCallback(eventCallback);
+  }
+
+  public void addView(View view, FrameLayout.LayoutParams layoutParams){
+    layerView.addView(view,layoutParams);
+
   }
 }
