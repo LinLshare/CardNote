@@ -3,6 +3,8 @@ package me.lshare.cardnote.base;
 import android.content.Context;
 
 /**
+ * The one and only one Controller for APP.
+ *
  * @author Lshare
  * @date 2017/6/3
  */
@@ -20,10 +22,17 @@ public class AppController implements EventCallback {
 
   public void start() {
     mainActivity.start();
+    mainActivity.showHome();
   }
 
   @Override
-  public void onEvent(int what, Object extra) {
-
+  public void onEvent(int eventType, Object extra) {
+    switch (eventType) {
+      case EVENT_ADD_NOTE_CLICK:
+        mainActivity.showAddNote();
+        break;
+      default:
+        break;
+    }
   }
 }

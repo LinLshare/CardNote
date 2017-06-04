@@ -10,15 +10,29 @@ import android.widget.FrameLayout;
  */
 public class UiManager {
 
-  private FrameLayout nativeLayer;
-  private FrameLayout webLayer;
-  private FrameLayout notificationLayer;
+  private UiLayer nativeLayer;
+  private UiLayer webLayer;
+  private UiLayer notificationLayer;
   private FrameLayout contentView;
   private Context context;
+  private EventCallback eventCallback;
 
-  public UiManager(Context context) {
+  public UiManager(Context context, EventCallback eventCallback) {
     this.context = context;
+    this.eventCallback = eventCallback;
     initLayers();
+  }
+
+  public UiLayer nativeLayer() {
+    return nativeLayer;
+  }
+
+  public UiLayer webLayer() {
+    return webLayer;
+  }
+
+  public UiLayer notificationLayer() {
+    return notificationLayer;
   }
 
   private void initLayers() {
@@ -26,23 +40,23 @@ public class UiManager {
     contentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                              ViewGroup.LayoutParams.MATCH_PARENT));
 
-    nativeLayer = new FrameLayout(context);
+    nativeLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams nativeLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
-    contentView.addView(nativeLayer, nativeLayerLp);
+    contentView.addView(nativeLayer.layerView(), nativeLayerLp);
 
-    webLayer = new FrameLayout(context);
+    webLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams webLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
-    contentView.addView(webLayer, webLayerLp);
+    contentView.addView(webLayer.layerView(), webLayerLp);
 
-    notificationLayer = new FrameLayout(context);
+    notificationLayer = new UiLayer(context, eventCallback);
     FrameLayout.LayoutParams notificationLayerLp =
         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                      ViewGroup.LayoutParams.MATCH_PARENT);
-    contentView.addView(notificationLayer, notificationLayerLp);
+    contentView.addView(notificationLayer.layerView(), notificationLayerLp);
   }
 
   public ViewGroup getContentView() {
