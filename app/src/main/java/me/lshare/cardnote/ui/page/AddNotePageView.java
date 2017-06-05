@@ -1,6 +1,8 @@
 package me.lshare.cardnote.ui.page;
 
 import android.content.Context;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import me.lshare.cardnote.base.CommonPageView;
 import me.lshare.cardnote.base.UiLayer;
@@ -23,6 +25,9 @@ public class AddNotePageView extends CommonPageView {
   protected void initView() {
     super.initView();
     inputBar = new InputBar(context);
-    rootView.addView(inputBar);
+    FrameLayout.LayoutParams inputBarLp =
+        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                     ViewGroup.LayoutParams.WRAP_CONTENT);
+    rootView.addView(inputBar, inputBarLp);
   }
 }

@@ -5,4 +5,6 @@
   <color name="colorAccent">#FF4081</color>
 
   <color name="textColorWhite">#FFFFFF</color>
+
+  <color name="bgColorGray">#0e000000</color>
 </resources>

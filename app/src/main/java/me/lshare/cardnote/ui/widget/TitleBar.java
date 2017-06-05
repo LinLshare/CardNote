@@ -218,11 +218,11 @@ public class TitleBar extends FrameLayout {
       return;
     }
     rightShareImageView = new ImageView(context);
+    rightShareImageView.setImageResource(R.drawable.ic_share_white_24dp);
+    rightShareImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     int widthAndHeight = DimensionUtils.dp2px(context, 48);
     LayoutParams rightShareImageViewLp = new LayoutParams(widthAndHeight, widthAndHeight);
     rightShareImageViewLp.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
-    int margin = DimensionUtils.dp2px(context, 16);
-    rightShareImageViewLp.rightMargin = margin;
     addView(rightShareImageView, rightShareImageViewLp);
 
     rightShareImageView.setOnClickListener(new OnClickListener() {
