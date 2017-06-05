@@ -189,7 +189,11 @@ public class TitleBar extends FrameLayout {
   private void showCenterEditTitle(String title, boolean isHint) {
     if (titleEditView != null) {
       titleEditView.setVisibility(VISIBLE);
-      titleEditView.setText(title);
+      if (isHint) {
+        titleEditView.setHint(title);
+      } else {
+        titleEditView.setText(title);
+      }
       return;
     }
     titleEditView = new EditText(context);
