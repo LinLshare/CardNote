@@ -10,11 +10,12 @@ import android.view.ViewGroup;
  * @date 2017/6/3
  */
 public abstract class PageView {
-  protected EventCallback eventCallback;
+  protected UiLayer parent;
   protected Context context;
 
-  public PageView(Context context) {
+  public PageView(Context context, UiLayer parent) {
     this.context = context;
+    this.parent = parent;
     initView();
   }
 
@@ -22,17 +23,14 @@ public abstract class PageView {
 
   public abstract ViewGroup view();
 
-  public void setEventCallback(EventCallback eventCallbacK) {
-    this.eventCallback = eventCallbacK;
+  public void postEvent(int msgType, Object extra) {
+    if (parent == null) {
+      throw new IllegalStateException("!!! parent shouldn't be null");
+    }
+    parent.onMessage(msgType, extra);
   }
 
-  public void postEvent(int eventType, Object extra) {
-    if (eventCallback == null) {
-      throw new IllegalStateException("!!! eventCallback shouldn't be null");
-    } eventCallback.onEvent(eventType, extra);
-  }
-
-  public void postEvent(int eventType) {
-    postEvent(eventType, null);
+  public void postEvent(int msgType) {
+    postEvent(msgType, null);
   }
 }

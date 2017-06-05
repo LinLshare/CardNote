@@ -8,7 +8,7 @@ import android.content.Context;
  * @author Lshare
  * @date 2017/6/3
  */
-public class AppController implements EventCallback {
+public class AppController implements MessageListener {
   protected Context appContext;
   protected MainActivity mainActivity;
 
@@ -22,22 +22,13 @@ public class AppController implements EventCallback {
 
   public void start() {
     mainActivity.start();
-    mainActivity.showHome();
   }
 
-  @Override
-  public void onEvent(int eventType, Object extra) {
-    switch (eventType) {
-      case EVENT_ADD_NOTE_CLICK:
-        mainActivity.showAddNote();
-        break;
-      case EVENT_EDIT_DONE:
 
-        break;
-      case EVENT_SHARE:
-        break;
-      case EVENT_SHOW_HOME:
-        
+  @Override
+  public void onMessage(int msgType, Object extra) {
+    switch (msgType) {
+      case MSG_SHARE:
         break;
       default:
         break;

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import me.lshare.cardnote.base.MessageListener;
 import me.lshare.cardnote.base.CommonPageView;
-import me.lshare.cardnote.base.EventCallback;
-import me.lshare.cardnote.ui.TitleBar;
+import me.lshare.cardnote.base.UiLayer;
+import me.lshare.cardnote.ui.widget.TitleBar;
 import me.lshare.common.ui.DimensionUtils;
 
 /**
@@ -17,9 +18,10 @@ public class TitleBarPageView extends CommonPageView implements TitleBar.Listene
 
   private TitleBar titleBar;
 
-  public TitleBarPageView(Context context) {
-    super(context);
+  public TitleBarPageView(Context context, UiLayer parent) {
+    super(context, parent);
   }
+
 
   @Override
   protected void initView() {
@@ -46,16 +48,16 @@ public class TitleBarPageView extends CommonPageView implements TitleBar.Listene
 
   @Override
   public void onRightDoneImageViewClick() {
-    postEvent(EventCallback.EVENT_EDIT_DONE);
+    postEvent(MessageListener.MSG_NATIVE_EDIT_DONE, titleBar.getTitle());
   }
 
   @Override
   public void onRightShareImageViewClick() {
-    postEvent(EventCallback.EVENT_SHARE);
+    postEvent(MessageListener.MSG_SHARE);
   }
 
   @Override
   public void onLeftBackImageClick() {
-    postEvent(EventCallback.EVENT_SHOW_HOME);
+    postEvent(MessageListener.MSG_NATIVE_BACK);
   }
 }

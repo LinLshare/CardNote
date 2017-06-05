@@ -13,8 +13,8 @@ import android.widget.FrameLayout;
 public class CommonPageView extends PageView {
   protected FrameLayout rootView;
 
-  public CommonPageView(Context context) {
-    super(context);
+  public CommonPageView(Context context, UiLayer parent) {
+    super(context, parent);
   }
 
   @Override

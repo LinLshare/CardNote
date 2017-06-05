@@ -8,12 +8,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import me.lshare.cardnote.R;
 import me.lshare.cardnote.adapter.HomeRecyclerAdapter;
-import me.lshare.cardnote.base.EventCallback;
-import me.lshare.cardnote.base.PageView;
+import me.lshare.cardnote.base.MessageListener;
+import me.lshare.cardnote.base.CommonPageView;
+import me.lshare.cardnote.base.UiLayer;
 import me.lshare.common.ui.DimensionUtils;
 import me.lshare.common.ui.recyclerview.CommonItemDecoration;
 
@@ -21,19 +21,15 @@ import me.lshare.common.ui.recyclerview.CommonItemDecoration;
  * @author Lshare
  * @date 2017/6/4
  */
-public class HomePageView extends PageView {
+public class HomePageView extends CommonPageView {
 
-  private FrameLayout rootView;
-
-  public HomePageView(Context context) {
-    super(context);
+  public HomePageView(Context context, UiLayer parent) {
+    super(context, parent);
   }
 
   @Override
   protected void initView() {
-    rootView = new FrameLayout(context);
-    rootView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                                          ViewGroup.LayoutParams.MATCH_PARENT));
+    super.initView();
 
     // note stream
     {
@@ -58,7 +54,7 @@ public class HomePageView extends PageView {
       addNoteButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          postEvent(EventCallback.EVENT_ADD_NOTE_CLICK);
+          postEvent(MessageListener.MSG_NATIVE_ADD_NOTE);
         }
       });
       FrameLayout.LayoutParams addNoteButtonLp =
@@ -71,10 +67,5 @@ public class HomePageView extends PageView {
       rootView.addView(addNoteButton, addNoteButtonLp);
     }
 
-  }
-
-  @Override
-  public ViewGroup view() {
-    return rootView;
   }
 }

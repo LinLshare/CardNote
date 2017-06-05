@@ -1,4 +1,4 @@
-package me.lshare.cardnote.ui;
+package me.lshare.cardnote.ui.widget;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -35,7 +35,6 @@ public class TitleBar extends FrameLayout {
   private ImageView rightDoneImageView;
   private EditText titleEditView;
 
-
   public TitleBar(@NonNull Context context) {
     super(context);
     this.context = context;
@@ -45,6 +44,20 @@ public class TitleBar extends FrameLayout {
   private void init() {
     setBackgroundColor(ColorUtils.getColor(context, R.color.colorPrimary));
     showCenterTitle(StringUtils.getString(context, R.string.app_name));
+  }
+
+  public String getTitle() {
+    String title = "";
+    switch (currentState) {
+      case STATE_EDIT:
+        title = titleEditView.getText().toString();
+        break;
+      case STATE_HOME:
+      case STATE_VIEW:
+        title = titleTextView.getText().toString();
+        break;
+    }
+    return title;
   }
 
   public void home(String title) {
@@ -135,6 +148,7 @@ public class TitleBar extends FrameLayout {
 
   private void showBackImageView() {
     if (backImageView != null) {
+      backImageView.setVisibility(VISIBLE);
       return;
     }
     backImageView = new ImageView(context);
@@ -145,14 +159,20 @@ public class TitleBar extends FrameLayout {
     backImageViewLp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
     addView(backImageView, backImageViewLp);
 
-    if (listener == null) {
-      throw new IllegalStateException("!!! should set listener first");
-    }
-    listener.onLeftBackImageClick();
+    backImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener == null) {
+          throw new IllegalStateException("!!! should set listener first");
+        }
+        listener.onLeftBackImageClick();
+      }
+    });
   }
 
   private void showCenterTitle(String title) {
     if (titleTextView != null) {
+      titleTextView.setVisibility(VISIBLE);
       titleTextView.setText(title);
       return;
     }
@@ -168,6 +188,7 @@ public class TitleBar extends FrameLayout {
 
   private void showCenterEditTitle(String title, boolean isHint) {
     if (titleEditView != null) {
+      titleEditView.setVisibility(VISIBLE);
       titleEditView.setText(title);
       return;
     }
@@ -189,6 +210,7 @@ public class TitleBar extends FrameLayout {
 
   private void showRightShareImageView() {
     if (rightShareImageView != null) {
+      rightShareImageView.setVisibility(VISIBLE);
       return;
     }
     rightShareImageView = new ImageView(context);
@@ -212,6 +234,7 @@ public class TitleBar extends FrameLayout {
 
   private void showRightDoneImageView() {
     if (rightDoneImageView != null) {
+      rightDoneImageView.setVisibility(VISIBLE);
       return;
     }
     rightDoneImageView = new ImageView(context);
