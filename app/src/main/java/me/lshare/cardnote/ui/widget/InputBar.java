@@ -35,13 +35,13 @@ public class InputBar extends LinearLayout {
     setPadding(0, padding, 0, padding);
     setBackgroundColor(ColorUtils.getColor(context, R.color.bgColorGray));
     // image
-    addImage(R.drawable.ic_add_photo_white_24dp, R.string.image);
+    addImage(R.drawable.ic_add_photo_accent_24dp, R.string.image);
     // map
-    addImage(R.drawable.ic_add_location_white_24dp, R.string.map);
+    addImage(R.drawable.ic_add_location_accent_24dp, R.string.map);
     // headline
-    addImage(R.drawable.ic_title_white_24dp, R.string.headline);
+    addImage(R.drawable.ic_add_title_accent_24dp, R.string.headline);
     // text field
-    addImage(R.drawable.ic_text_fields_white_24dp, R.string.text_field);
+    addImage(R.drawable.ic_add_text_fields_accent_24dp, R.string.text_field);
   }
 
   private void addImage(@DrawableRes int drawableRes, @StringRes int stringRes) {
